@@ -165,10 +165,11 @@ footer { margin-top: 3.5rem; padding-top: 1.2rem; border-top: 2px solid var(--in
 
   <h2>Patching <small>About two minutes</small></h2>
   <ol class="steps">
-    <li>Get Delta Patcher (Windows, macOS, Linux) or xdelta3.</li>
-    <li>Make sure your ISO is the clean Japanese release. Its SHA-1 should match the one below.</li>
-    <li>In Delta Patcher, pick your Japanese ISO as the original file and the .xdelta as the patch, then apply. With xdelta3: <code>xdelta3 -d -s "Japanese.iso" patch.xdelta "English.iso"</code></li>
-    <li>Play the English ISO in PPSSPP, or on a PSP with custom firmware.</li>
+    <li>Download <a href="https://github.com/marco-calautti/DeltaPatcher/releases">Delta Patcher</a> and the .xdelta file from the release.</li>
+    <li><strong>Make a copy of your Japanese ISO.</strong> Delta Patcher changes the file you pick, so patch the copy and keep the original safe.</li>
+    <li>Open Delta Patcher. Next to <em>Original file</em>, click the folder icon and choose the copy. Next to <em>XDelta patch</em>, choose the .xdelta file.</li>
+    <li>Click <em>Apply patch</em> and wait a few seconds for the success message. The copy is now the English game; rename it if you like.</li>
+    <li>Play it in PPSSPP, or on a PSP with custom firmware. If Delta Patcher reports an error, your ISO is a different dump: its SHA-1 must match the one below.</li>
   </ol>
   <div class="hash">
     <span class="lbl">Original ISO SHA-1</span>
