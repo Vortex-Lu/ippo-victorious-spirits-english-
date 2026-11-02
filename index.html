@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="English fan translation patch for Hajime no Ippo: Victorious Spirits (PSP).">
+<title>Victorious Spirits English Patch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a fight poster. Red and blue corners frame a single column; the "tale of the tape"
+   strip carries the numbers, the bout card lists what was translated. */
+:root {
+  --mat: #f3f5f8;          /* ring canvas */
+  --ink: #141a26;
+  --muted: #586174;
+  --rule: #d5dae3;
+  --panel: #ffffff;
+  --red: #c8202f;          /* red corner */
+  --blue: #1f4fa8;         /* blue corner */
+  --gold: #a87a12;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --mat: #0f141e; --ink: #e8ecf3; --muted: #9aa4b8; --rule: #273042; --panel: #161d2b;
+    --red: #ff5a5f; --blue: #6f9dff; --gold: #e2b54a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --mat: #0f141e; --ink: #e8ecf3; --muted: #9aa4b8; --rule: #273042; --panel: #161d2b;
+  --red: #ff5a5f; --blue: #6f9dff; --gold: #e2b54a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--mat); color: var(--ink); font: 400 1rem/1.6 var(--body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 0 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.corners { height: 10px; background: linear-gradient(90deg, var(--red) 0 50%, var(--blue) 50% 100%); }
+header { padding-block: 3rem 2rem; display: grid; gap: .9rem; }
+.eyebrow { font: 500 .78rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 900 clamp(2.8rem, 9vw, 5.6rem)/.9 var(--display); text-transform: uppercase; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h1 .red { color: var(--red); } h1 .blue { color: var(--blue); }
+.lede { font-size: 1.15rem; max-width: 62ch; margin: 0; }
+.tape { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 2px solid var(--ink); margin-block: 1rem 2.5rem; }
+.tape div { padding: .9rem .8rem; border-left: 1px solid var(--rule); min-width: 0; }
+.tape div:first-child { border-left: 0; }
+.tape b { display: block; font: 900 2.1rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.tape span { font: 500 .72rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h2 { font: 900 2rem/1 var(--display); text-transform: uppercase; margin: 3rem 0 1rem; display: flex; align-items: baseline; gap: .7rem; text-wrap: balance; }
+h2 small { font: 500 .75rem/1 var(--mono); letter-spacing: .12em; color: var(--muted); }
+p { max-width: 66ch; }
+.card { display: grid; border-top: 2px solid var(--ink); }
+.bout { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.2rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); }
+.bout h3 { margin: 0; font: 700 1.25rem/1.15 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+.bout h3 em { display: block; font: 500 .72rem/1.4 var(--mono); font-style: normal; letter-spacing: .08em; color: var(--red); margin-top: .25rem; }
+.bout p { margin: 0; }
+ul.plain { margin: .4rem 0 0; padding-left: 1.1rem; display: grid; gap: .3rem; }
+.notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; }
+.notes div { min-width: 0; }
+.notes h3 { font: 600 1rem/1.3 var(--body); margin: 0 0 .3rem; }
+.notes p { margin: 0; color: var(--muted); }
+blockquote { margin: .6rem 0 0; padding-left: .9rem; border-left: 3px solid var(--blue); color: var(--ink); font-size: .95rem; }
+ol.steps { padding-left: 1.3rem; display: grid; gap: .5rem; max-width: 66ch; }
+.download { display: grid; gap: .5rem; padding: 1.2rem; background: var(--panel); border: 2px dashed var(--gold); margin-block: 1rem; }
+.download strong { font: 700 1.3rem/1.1 var(--display); text-transform: uppercase; letter-spacing: .03em; }
+.hash { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; padding: .8rem 1rem; background: var(--panel); border: 1px solid var(--rule); }
+.hash code { font: 400 .9rem/1.4 var(--mono); overflow-wrap: anywhere; min-width: 0; flex: 1 1 18rem; }
+.hash .lbl { font: 500 .72rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); flex-basis: 100%; }
+button { font: 600 .85rem/1 var(--body); padding: .55rem .9rem; border: 1px solid var(--ink); background: var(--ink); color: var(--mat); cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+a { color: var(--blue); }
+.small { font-size: .88rem; color: var(--muted); }
+footer { margin-top: 3.5rem; padding-top: 1.2rem; border-top: 2px solid var(--ink); display: grid; gap: .6rem; }
+@media (max-width: 640px) {
+  .tape { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tape div:nth-child(3) { border-left: 0; }
+  .tape div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .bout { grid-template-columns: minmax(0, 1fr); gap: .4rem; }
+  .notes { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+
+</head>
+<body>
+<div class="corners" aria-hidden="true"></div>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">PSP · ULJS-00125 · English fan translation · v1.0</div>
+    <h1><span class="red">Hajime no Ippo</span><br>Victorious <span class="blue">Spirits</span></h1>
+    <p class="lede">Play the whole PSP game in English: the story mode that follows the manga from Ippo's first steps at Kamogawa Gym, every menu, every boxer, and the arenas themselves. It ships as a small patch you apply to your own copy of the Japanese game.</p>
+  </header>
+
+  <div class="tape" role="list" aria-label="Patch at a glance">
+    <div role="listitem"><b>35</b><span>Story chapters</span></div>
+    <div role="listitem"><b>3,491</b><span>Lines of text</span></div>
+    <div role="listitem"><b>81</b><span>Redrawn graphics</span></div>
+    <div role="listitem"><b>818 KB</b><span>Patch size</span></div>
+  </div>
+
+  <div class="download">
+    <strong>Download</strong>
+    <span><a href="https://github.com/Vortex-Lu/ippo-victorious-spirits-english-/releases/latest">Get the latest release on GitHub</a>: the .xdelta patch, README.txt and TESTING.txt.</span>
+    <span class="small">The patch contains no game data. You need your own copy of the original Japanese UMD/ISO.</span>
+  </div>
+
+  <h2>The card <small>What's translated</small></h2>
+  <div class="card">
+    <div class="bout">
+      <h3>Story Mode<em>1,968 scenes</em></h3>
+      <p>All 35 chapters of dialogue and narration. Speaker names, page breaks and text boxes are laid out to fit the game's three-line window, with no lines cut off or running past the box.</p>
+    </div>
+    <div class="bout">
+      <h3>Menus &amp; help<em>Every screen</em></h3>
+      <p>Main menu, Exhibition, Practice, Replay, Data Book, Options and save/load messages, including the scrolling help line at the bottom of each screen.</p>
+    </div>
+    <div class="bout">
+      <h3>In-game text<em>1,011 strings</em></h3>
+      <p>Boxer names and character versions ("Takamura (World Title Challenge)"), special moves, venues, rules, results, money, items, trophies and trunks.</p>
+    </div>
+    <div class="bout">
+      <h3>Boxer roster<em>~140 real pros</em></h3>
+      <p>The licensed roster of real Japanese boxers from 2006, with their gyms and fighting-style notes: Hozumi Hasegawa, Daisuke Naito, Nobuo Nashiro, Eagle Kyowa and the rest.</p>
+    </div>
+    <div class="bout">
+      <h3>Graphics<em>37 labels</em></h3>
+      <p>Screen titles, main menu buttons, Exhibition setting labels and ranking headers, redrawn in the original colors with the same outline and glow.</p>
+    </div>
+    <div class="bout">
+      <h3>Arenas<em>44 textures</em></h3>
+      <p>Ringside scoreboards (RED CORNER / ROUND / TIME / BLUE CORNER), tournament banners like Dynamite Glove, Champion Carnival and the Rookie King finals, and the fans' cheering banners.</p>
+    </div>
+  </div>
+
+  <h2>In the corner <small>Translation notes</small></h2>
+  <div class="notes">
+    <div>
+      <h3>Names follow the official English</h3>
+      <p>Characters, techniques and places use the spellings fans know from the English manga and anime: Ippo Makunouchi, Mamoru Takamura, Volg Zangief, Jimmy Sisphar, the Dempsey Roll.</p>
+    </div>
+    <div>
+      <h3>Dialects read as personality</h3>
+      <p>Sendo's Osaka swagger, Take's Kyushu warmth and Volg's careful, polite Japanese come through in word choice and rhythm, not phonetic spelling.</p>
+      <blockquote>"Wh-what?! Makunouchi's withdrawing?! That's the dumbest thing I ever heard!" (Sendo)</blockquote>
+    </div>
+    <div>
+      <h3>Boxing terms are real boxing terms</h3>
+      <p>Infighter, outboxer, boxer-puncher, knockdowns, the final bell, OPBF. Weight classes and "Rookie King" match the series' English usage.</p>
+    </div>
+    <div>
+      <h3>Fitted to the screen</h3>
+      <p>Long names were shortened only where a box is narrow, such as the venue cards ("Osaka Pref. Gym", "Korakuen Final") and trophy names.</p>
+    </div>
+  </div>
+
+  <h2>Under the hood <small>For ROM hackers</small></h2>
+  <ul class="plain">
+    <li>Story scenes are rebuilt with a larger text capacity (a small code patch), so English never overflows the game's scene buffer.</li>
+    <li>Executable strings that outgrew their slots are moved to a new area of memory and every pointer to them is updated. Nothing else in the program moves.</li>
+    <li>Menu widgets that show values at runtime get more room, padded invisibly, so names and help lines display in full.</li>
+    <li>Graphics are edited in the game's own texture format with the original palette, so every pixel outside the redrawn text is unchanged.</li>
+    <li>The game's internal file table is updated for every changed file, and each build is checked file by file against the original.</li>
+  </ul>
+
+  <h2>Patching <small>About two minutes</small></h2>
+  <ol class="steps">
+    <li>Get Delta Patcher (Windows, macOS, Linux) or xdelta3.</li>
+    <li>Make sure your ISO is the clean Japanese release. Its SHA-1 should match the one below.</li>
+    <li>In Delta Patcher, pick your Japanese ISO as the original file and the .xdelta as the patch, then apply. With xdelta3: <code>xdelta3 -d -s "Japanese.iso" patch.xdelta "English.iso"</code></li>
+    <li>Play the English ISO in PPSSPP, or on a PSP with custom firmware.</li>
+  </ol>
+  <div class="hash">
+    <span class="lbl">Original ISO SHA-1</span>
+    <code id="sha-orig">6DF763C67265B65CABE00AD7CC396AA5109CB03D</code>
+    <button type="button" id="copy-orig" data-target="sha-orig">Copy</button>
+  </div>
+  <div class="hash" style="margin-top:.6rem">
+    <span class="lbl">Patched ISO SHA-1 (v1.0)</span>
+    <code id="sha-new">8C83374FD829EB18480DF39932F96CA50432AC81</code>
+    <button type="button" id="copy-new" data-target="sha-new">Copy</button>
+  </div>
+
+  <h2>Known limits <small>Small print</small></h2>
+  <ul class="plain">
+    <li>41 lesser-known roster boxers have no public record of how their names are read. They use the most likely reading; corrections are welcome.</li>
+    <li>The tiny sponsor print under the arena banners, the title logo, one promotional picture and the kanji drawn into the Game Over artwork stay in Japanese.</li>
+    <li>Wireless (ad hoc) play hasn't been tested.</li>
+  </ul>
+
+  <h2>Found something? <small>Reports</small></h2>
+  <p>Open an issue on <a href="https://github.com/Vortex-Lu/ippo-victorious-spirits-english-/issues">the GitHub page</a> with a screenshot and say where you were: the mode, story chapter or menu screen. Bad lines, cut-off text, leftover Japanese and wrong names all get fixed in the next update. A checklist for testers comes with the patch (TESTING.txt).</p>
+
+  <footer>
+    <p><strong>Credits.</strong> Vortex-Lu: project lead, playtesting and release. Translation and hacking were done with AI assistance, checked by playing through the game.</p>
+    <p class="small">Built with Python, Pillow and xdelta3. This is an unofficial fan project, not affiliated with or endorsed by the rights holders of Hajime no Ippo or the game's publisher. No game files are distributed. Support the series: buy the game and read the manga.</p>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll('button[data-target]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var el = document.getElementById(b.dataset.target);
+    var text = el.textContent.trim();
+    var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1500); };
+    try {
+      navigator.clipboard.writeText(text).then(done, function () { select(el); });
+    } catch (e) { select(el); }
+  });
+});
+function select(el) {
+  var r = document.createRange(); r.selectNodeContents(el);
+  var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+}
+</script>
+
+</body>
+</html>
